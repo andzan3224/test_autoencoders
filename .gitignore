@@ -1,4 +1,6 @@
-
+## Manually added
+*.xml
+.idea
 =======
 ## Core latex/pdflatex auxiliary files:
 *.aux
