@@ -1,6 +1,9 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from typodomain import nb_chars, max_word_length, vector_to_string, matrix2d_to_vector, int_to_char
+import numpy as np
+
+from Utils.typodomain import nb_chars, max_word_length, vector_to_string, matrix2d_to_vector, int_to_char
+
+
 # import matplotlib
 # matplotlib.rc('font', family='')
 

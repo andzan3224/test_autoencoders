@@ -9,13 +9,23 @@ Links:
 """
 from __future__ import division, print_function, absolute_import
 
-import tensorflow as tf
-import numpy as np
 import matplotlib.pyplot as plt
-
-# Import MNIST data
+import numpy as np
+import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
+#import load_data
 mnist = input_data.read_data_sets("MNIST_data", one_hot=True)
+
+def load_data(filename, number=0, create_set=False):
+    file = open(filename, 'r')
+    words = file.read().splitlines()
+    if number > 0:
+        words = words[:number]
+    word_set = set(words) if create_set else None
+    return words, word_set
+
+#also import text data example
+words = load_data('data/words1000')
 
 # Parameters
 learning_rate = 0.01

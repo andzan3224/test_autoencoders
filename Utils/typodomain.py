@@ -1,13 +1,15 @@
-import numpy as np
 import os
+import pickle
+import random
+
+import numpy as np
 from keras.engine import Input
 from keras.engine import Model
 from keras.layers import Dense
-import pickle
 from theano import config as TC
-import random
-from denoisingautoencoder import DenoisingAutoEncoder, ConvDaeMultiSoftmax
-from checkpointer import load_checkpoint
+
+#from Utils.checkpointer import load_checkpoint
+#from Utils.denoisingautoencoder import DenoisingAutoEncoder, ConvDaeMultiSoftmax
 
 char_to_int = {'q': 0, 'a': 1, 'ą': 2, 'z': 3, 'ż': 4, 'w': 5, 's': 6, 'ś': 7, 'x': 8, 'ź': 9, 'e': 10,
                'ę': 11, 'd': 12, 'c': 13, 'ć': 14, 'r': 15, 'f': 16, 'v': 17, 't': 18, 'g': 19, 'b': 20,

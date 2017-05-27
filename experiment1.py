@@ -1,7 +1,10 @@
 import sys
+
 import numpy as np
-from typodomain import TypoAutoEncoder, word_vector_length, data_generator_flexible,\
+
+from Utils.typodomain import TypoAutoEncoder, word_vector_length, data_generator_flexible,\
     calculate_test_accuracy, load_data
+
 # from keras.utils.visualize_util import plot
 
 
