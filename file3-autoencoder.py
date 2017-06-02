@@ -29,7 +29,7 @@ words = load_data('data/words1000')
 
 # Parameters
 learning_rate = 0.01
-training_epochs = 20
+training_epochs = 10
 batch_size = 256
 display_step = 1
 examples_to_show = 10
@@ -40,7 +40,7 @@ n_hidden_2 = 32 # 2nd layer num features
 n_input = 784 # MNIST data input (img shape: 28*28)
 
 # tf Graph input (only pictures)
-X = tf.placeholder("float", [None, n_input])
+X = tf.placeholder("float", [batch_size, n_input])
 
 weights = {
     'encoder_h1': tf.Variable(tf.random_normal([n_input, n_hidden_1])),
@@ -78,6 +78,7 @@ def decoder(x):
     return layer_2
 
 # Construct model
+
 encoder_op = encoder(X)
 decoder_op = decoder(encoder_op)
 
