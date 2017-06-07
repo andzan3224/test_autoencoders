@@ -1,36 +1,24 @@
-""" Auto Encoder Example.
-Using an auto encoder on MNIST handwritten digits.
-References:
-    Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. "Gradient-based
-    learning applied to document recognition." Proceedings of the IEEE,
-    86(11):2278-2324, November 1998.
-Links:
-    [MNIST Dataset] http://yann.lecun.com/exdb/mnist/
-"""
 from __future__ import division, print_function, absolute_import
-
 import tensorflow as tf
-import numpy as np
-import matplotlib.pyplot as plt
+import Utils.DataManager as ud
 
-# Import MNIST data
-from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets("MNIST_data", one_hot=True)
 
+words = ud.load_data('data/words1000')
+# print(words)
+
+
+###################### model
 # Parameters
 learning_rate = 0.01
 training_epochs = 20
-batch_size = 256
+batch_size = 20
 display_step = 1
 examples_to_show = 10
 
 # Network Parameters
-n_hidden_1 = 256 # 1st layer num features
-n_hidden_2 = 128 # 2nd layer num features
-n_input = 784 # MNIST data input (img shape: 28*28)
-
-# tf Graph input (only pictures)
-X = tf.placeholder("float", [None, n_input])
+n_hidden_1 = 64  # 1st layer num features
+n_hidden_2 = 32  # 2nd layer num features
+n_input = 576  # Single word data input (img shape: 16 ch per single word X 36 symbols in 1 hot encoding)
 
 weights = {
     'encoder_h1': tf.Variable(tf.random_normal([n_input, n_hidden_1])),
@@ -67,6 +55,15 @@ def decoder(x):
                                    biases['decoder_b2']))
     return layer_2
 
+
+# tf Graph input (only words)
+X = tf.placeholder("float", [batch_size, n_input])
+#print("Shape of Xt is {}".format(tf.shape(Xt)))
+
+#X = tf.slice(Xt,[9,0],[1,n_input])
+#print("Shape of X is {}".format(tf.shape(X)))
+
+
 # Construct model
 encoder_op = encoder(X)
 decoder_op = decoder(encoder_op)
@@ -83,17 +80,21 @@ optimizer = tf.train.RMSPropOptimizer(learning_rate).minimize(cost)
 # Initializing the variables
 init = tf.global_variables_initializer()
 
+# generator for the batch to feed into the computation
+batch = ud.data_generator(words[0], batch_size, n_input)
+
+
 # Launch the graph
 with tf.Session() as sess:
     sess.run(init)
-    total_batch = int(mnist.train.num_examples/batch_size)
+    total_batch = 15
     # Training cycle
     for epoch in range(training_epochs):
         # Loop over all batches
         for i in range(total_batch):
-            batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+            batch1 = next(batch)
             # Run optimization op (backprop) and cost op (to get loss value)
-            _, c = sess.run([optimizer, cost], feed_dict={X: batch_xs})
+            _, c = sess.run([optimizer, cost], feed_dict={X: batch1})
         # Display logs per epoch step
         if epoch % display_step == 0:
             print("Epoch:", '%04d' % (epoch+1),
@@ -101,14 +102,13 @@ with tf.Session() as sess:
 
     print("Optimization Finished!")
 
-    # Applying encode and decode over test set
-    encode_decode = sess.run(
-        y_pred, feed_dict={X: mnist.test.images[:examples_to_show]})
-    # Compare original images with their reconstructions
-    f, a = plt.subplots(2, 10, figsize=(10, 2))
-    for i in range(examples_to_show):
-        a[0][i].imshow(np.reshape(mnist.test.images[i], (28, 28)))
-        a[1][i].imshow(np.reshape(encode_decode[i], (28, 28)))
-    f.show()
-    plt.draw()
-    plt.waitforbuttonpress()
+
+import sys
+sys.exit(0)
+
+############## not appl
+plt.imshow(np.reshape(c,(14,28)))
+plt.draw()
+plt.waitforbuttonpress()
+
+

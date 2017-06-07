@@ -1,0 +1,7 @@
+- generation of test set
+- encode_decode on test set after training
+- add noise to MNIST part and see the effect on reconstruction, evaluating effect of depth
+- add error generator  to TypAutoenco
+- multiSoftmax as output layer instead of simgoid output layer in the decoder, for TypoAutoenco
+ (this can be done directly as Logit are already calculated with "tf.add(tf.matmul"). Need however to divide the all bunch of logits so calculated into
+ groups of 36. Every group into one softmax and then cross-entropy with 1-hot from Ground Trught (the inputs!)
