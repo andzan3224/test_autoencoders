@@ -16,9 +16,9 @@ display_step = 1
 examples_to_show = 10
 
 # Network Parameters
-n_hidden_1 = 64 # 1st layer num features
-n_hidden_2 = 32 # 2nd layer num features
-n_input = 576 # Single word data input (img shape: 16 ch per single word X 36 symbols in 1 hot encoding)
+n_hidden_1 = 64  # 1st layer num features
+n_hidden_2 = 32  # 2nd layer num features
+n_input = 576  # Single word data input (img shape: 16 ch per single word X 36 symbols in 1 hot encoding)
 
 weights = {
     'encoder_h1': tf.Variable(tf.random_normal([n_input, n_hidden_1])),
@@ -80,7 +80,7 @@ optimizer = tf.train.RMSPropOptimizer(learning_rate).minimize(cost)
 # Initializing the variables
 init = tf.global_variables_initializer()
 
-
+# generator for the batch to feed into the computation
 batch = ud.data_generator(words[0], batch_size, n_input)
 
 
@@ -101,11 +101,6 @@ with tf.Session() as sess:
                   "cost=", "{:.9f}".format(c))
 
     print("Optimization Finished!")
-
-
-#t , c  = sess.run([Xt, X], feed_dict={Xt: batch1}) #this should be a list obtained from the generator
-#print(c)
-
 
 
 import sys
