@@ -125,5 +125,5 @@ while True:
 
     #p += seq_length
     p = random.randint(0, len(data) - seq_length -1)
-
+    #p +=1
     n += 1
